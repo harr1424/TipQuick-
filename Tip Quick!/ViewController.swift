@@ -22,24 +22,30 @@ class ViewController: UIViewController {
     @IBOutlet weak var personsSplittingLabel: UILabel!
     @IBOutlet weak var personsSplittingSlider: UISlider!
     @IBOutlet weak var eachPayLabel: UILabel!
+    @IBOutlet weak var noBillWarning: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        noBillWarning.isHidden = true
         zeroTip.isSelected = true
     }
     
     func calculateShare() {
-        if Double(billAmount.text!) == nil {
-            let alert = UIAlertController(title: "No Bill Amount", message: "Please enter the amount shown on your bill at the top of the screen", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default))
-            self.present(alert, animated: true, completion: nil)
+        bill = Double(billAmount.text!)
+        let share = (bill ?? 0 + (bill ?? 0 * (tip ?? 0))) / Double(persons)
+        let formattedShare = String(format: "%.2f", share)
+        eachPayLabel.text = "\(formattedShare) per person"
+        if bill == nil {
+            noBillWarning.isHidden = false
         } else {
-            bill = Double(billAmount.text!)
-            let share = (bill! + (bill! * (tip ?? 0))) / Double(persons)
-            let formattedShare = String(format: "%.2f", share)
-            eachPayLabel.text = "\(formattedShare) per person"
+            noBillWarning.isHidden = true
         }
     }
+    
+    @IBAction func billAmountChanged(_ sender: UITextField) {
+        calculateShare()
+    }
+    
     
     @IBAction func sliderUpdate(_ sender: UISlider) {
         persons = Int(sender.value)
