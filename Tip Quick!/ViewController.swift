@@ -9,10 +9,13 @@ import UIKit
 
 class ViewController: UIViewController {
     var bill: Double?
-    var tip: Double?
+    var tip: Double? = 0
     var persons: Int = 10
     
-    @IBOutlet weak var billAmount: UITextField!
+    @IBOutlet weak var billAmount: UITextField! {
+        didSet { billAmount?.addDoneCancelToolbar() }
+    }
+    
     @IBOutlet weak var zeroTip: UIButton!
     @IBOutlet weak var fiveTip: UIButton!
     @IBOutlet weak var tenTip: UIButton!
@@ -31,8 +34,9 @@ class ViewController: UIViewController {
     }
     
     func calculateShare() {
+        print(tip!)
         bill = Double(billAmount.text!)
-        let share = (bill ?? 0 + (bill ?? 0 * (tip ?? 0))) / Double(persons)
+        let share = ((bill ?? 0) + ((bill ?? 0) * (tip ?? 0))) / Double(persons)
         let formattedShare = String(format: "%.2f", share)
         eachPayLabel.text = "\(formattedShare) per person"
         if bill == nil {
@@ -45,7 +49,6 @@ class ViewController: UIViewController {
     @IBAction func billAmountChanged(_ sender: UITextField) {
         calculateShare()
     }
-    
     
     @IBAction func sliderUpdate(_ sender: UISlider) {
         persons = Int(sender.value)
@@ -73,5 +76,6 @@ class ViewController: UIViewController {
         billAmount.endEditing(true)
         calculateShare()
     }
+
 }
 

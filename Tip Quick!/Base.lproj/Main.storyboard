@@ -26,7 +26,7 @@
                                             <constraint firstAttribute="height" constant="100" id="igC-HX-rXO"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="60"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                         <connections>
                                             <action selector="billAmountChanged:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="BoO-ML-bX2"/>
                                         </connections>
